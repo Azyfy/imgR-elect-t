@@ -1,5 +1,5 @@
 const path = require("path")
-const { app, BrowserWindow } = require("electron")
+const { app, BrowserWindow, Menu } = require("electron")
 
 const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
@@ -29,6 +29,10 @@ function createMainWindow() {
 app.whenReady().then(() => {
     createMainWindow()
 
+    //Implement menu
+    const mainMenu = Menu.buildFromTemplate(menu)
+    Menu.setApplicationMenu(mainMenu)
+
     app.on("activate", () => {
          // On macOS it's common to re-create a window in the app when the
          // dock icon is clicked and there are no other windows open.
@@ -47,6 +51,20 @@ app.on("window-all-closed", () => {
       app.quit()
     }
   })
+
+  // Menu template
+  const menu = [
+      {
+          label: "File",
+          submenu: [
+              {
+                label: "Quit",
+                click: () => app.quit(),
+                accelerator: "CmdOrCtrl+W"
+              }
+          ]
+      }
+  ]
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
