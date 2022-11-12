@@ -19,6 +19,8 @@ function createMainWindow() {
     if(isDev) {
         mainWindow.webContents.openDevTools()
     }
+
+    // npx electronmon . (auto restarts after changes)
 }
 
 
