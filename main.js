@@ -54,16 +54,25 @@ app.on("window-all-closed", () => {
 
   // Menu template
   const menu = [
-      {
-          label: "File",
+      ...(isMac ? [{
+          label: app.name,
           submenu: [
               {
-                label: "Quit",
-                click: () => app.quit(),
-                accelerator: "CmdOrCtrl+W"
+                  label: "About"
               }
           ]
-      }
+      }] : []),
+      {
+          role: "fileMenu"
+      },
+      ...(!isMac ? [{
+          label: "Help",
+          submenu: [
+              {
+                  label: "About"
+              }
+          ]
+      }] : [])
   ]
 
 // In this file you can include the rest of your app's specific main process
