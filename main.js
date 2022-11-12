@@ -1,20 +1,24 @@
 const path = require("path")
 const { app, BrowserWindow } = require("electron")
 
+const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
-console.log(process.platform)
+console.log("Platform " + process.platform)
+console.log("Env " + process.env.NODE_ENV)
 
 function createMainWindow() {
     const mainWindow = new BrowserWindow({
         title: "Image Resizer",
-        width: 500,
+        width: isDev ? 1000 : 500,
         height: 600
     })
 
     mainWindow.loadFile(path.join(__dirname, "./renderer/index.html"))
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    if(isDev) {
+        mainWindow.webContents.openDevTools()
+    }
 }
 
 
