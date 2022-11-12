@@ -20,7 +20,6 @@ function createMainWindow() {
         mainWindow.webContents.openDevTools()
     }
 
-    // npx electronmon . (auto restarts after changes)
 }
 
 
