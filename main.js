@@ -22,6 +22,17 @@ function createMainWindow() {
 
 }
 
+function createAboutWindow() {
+    const aboutWindow = new BrowserWindow({
+        title: "About Image Resizer",
+        width: 300,
+        height: 300
+    })
+
+    aboutWindow.loadFile(path.join(__dirname, "./renderer/about.html"))
+
+}
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -58,7 +69,8 @@ app.on("window-all-closed", () => {
           label: app.name,
           submenu: [
               {
-                  label: "About"
+                  label: "About",
+                  click: createAboutWindow
               }
           ]
       }] : []),
@@ -69,7 +81,8 @@ app.on("window-all-closed", () => {
           label: "Help",
           submenu: [
               {
-                  label: "About"
+                  label: "About",
+                  click: createAboutWindow
               }
           ]
       }] : [])
