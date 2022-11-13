@@ -9,8 +9,10 @@ const isMac = process.platform === "darwin"
 console.log("Platform " + process.platform)
 console.log("Env " + process.env.NODE_ENV)
 
+let mainWindow
+
 function createMainWindow() {
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         title: "Image Resizer",
         width: isDev ? 1000 : 500,
         height: 600,
@@ -51,6 +53,9 @@ app.whenReady().then(() => {
     //Implement menu
     const mainMenu = Menu.buildFromTemplate(menu)
     Menu.setApplicationMenu(mainMenu)
+
+    //remove mainWindow from memory on close
+    mainWindow.on("closed", () => (mainWindow = null))
 
     app.on("activate", () => {
          // On macOS it's common to re-create a window in the app when the
