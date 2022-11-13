@@ -26,6 +26,24 @@ function loadImage(e) {
     outputPath.innerText = path.join(os.homedir(), "imageresizer")
 }
 
+function sendImage(e) {
+    e.preventDefault()
+
+    const width = widthInput.value
+    const height = heightInput.value
+
+    if(!img.files[0]) {
+        alertError("Please upload an image")
+        return
+    }
+
+    if(width === "" || height === "") {
+        alertError("Please fill in height and width")
+        return
+    }
+
+}
+
 function isFileImage(file) {
     const acceptedImageTypes = ["image/gif", "image/png", "image/jpeg"]
 
@@ -59,3 +77,5 @@ function alertSuccess(message) {
 }
 
 img.addEventListener("change", loadImage)
+
+form.addEventListener("submit", sendImage)
