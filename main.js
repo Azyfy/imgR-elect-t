@@ -1,6 +1,8 @@
 const path = require("path")
 const os = require("os")
-const { app, BrowserWindow, Menu, ipcMain } = require("electron")
+const fs = require("fs")
+const resizeImg = require("resize-img")
+const { app, BrowserWindow, Menu, ipcMain, shell } = require("electron")
 
 const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
@@ -61,9 +63,32 @@ app.whenReady().then(() => {
 
 ipcMain.on("image:resize", (e, options) => {
     options.dest = path.join(os.homedir(), "imageresizer")
-    console.log(options)
+    resizeImage(options)
 })
 
+async function resizeImage({ imgPath, width, height, dest }) {
+    try {
+        const newPath = await resizeImg(fs.readFileSync(imgPath), {
+            width: +width,
+            height: +height
+        })
+
+        const filename = path.basename(imgPath)
+
+        if(!fs.existsSync(dest)) {
+            fs.mkdirSync(dest)
+        }
+
+        fs.writeFileSync(path.join(dest, filename), newPath)
+
+        mainWindow.webContents.send("image:done")
+
+        shell.openPath(dest)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
