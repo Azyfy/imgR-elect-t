@@ -1,3 +1,5 @@
+const { ipcRenderer } = require("electron")
+
 const form = document.querySelector("#img-form")
 const img = document.querySelector("#img")
 const outputPath = document.querySelector("#output-path")
@@ -31,6 +33,7 @@ function sendImage(e) {
 
     const width = widthInput.value
     const height = heightInput.value
+    const imgPath = img.files[0].path
 
     if(!img.files[0]) {
         alertError("Please upload an image")
@@ -41,6 +44,12 @@ function sendImage(e) {
         alertError("Please fill in height and width")
         return
     }
+
+    ipcRenderer.send("image:resize", {
+        imgPath,
+        width,
+        height
+    })
 
 }
 
