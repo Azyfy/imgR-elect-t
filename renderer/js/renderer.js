@@ -1,5 +1,3 @@
-const { ipcRenderer } = require("electron")
-
 const form = document.querySelector("#img-form")
 const img = document.querySelector("#img")
 const outputPath = document.querySelector("#output-path")

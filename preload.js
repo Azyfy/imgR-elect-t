@@ -16,7 +16,7 @@ contextBridge.exposeInMainWorld("Toastify", {
 })
 
 contextBridge.exposeInMainWorld("ipcRenderer", {
-    sned: (channel, data) => ipcRenderer.send(channel, data),
+    send: (channel, data) => ipcRenderer.send(channel, data),
     on: (channel, func) =>
         ipcRenderer.on(channel, (event,...args) => func(...args)) 
 })
