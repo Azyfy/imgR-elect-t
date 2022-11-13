@@ -1,5 +1,6 @@
 const path = require("path")
-const { app, BrowserWindow, Menu } = require("electron")
+const os = require("os")
+const { app, BrowserWindow, Menu, ipcMain } = require("electron")
 
 const isDev = process.env.NODE_ENV !== "production"
 const isMac = process.platform === "darwin"
@@ -56,6 +57,11 @@ app.whenReady().then(() => {
           createMainWindow()
         }
       })
+})
+
+ipcMain.on("image:resize", (e, options) => {
+    options.dest = path.join(os.homedir(), "imageresizer")
+    console.log(options)
 })
 
 
